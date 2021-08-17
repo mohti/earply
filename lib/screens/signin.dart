@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pointofsale/coustomWidgets/CustomInputDecorationWidget.dart';
 import 'package:pointofsale/coustomWidgets/customButton.dart';
+import 'package:pointofsale/screens/countryPicker.dart';
 import 'package:pointofsale/screens/enterCompanyDetails.dart';
 
 class SignIn extends StatefulWidget {
@@ -14,6 +15,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+      bool passwordHide = false;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -27,10 +29,10 @@ class _SignInState extends State<SignIn> {
           height: MediaQuery.of(context).size.height,
           child: Center(
               child: Column(
-               // mainAxisSize: MainAxisSize.max,
+            // mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-             Image.asset('assets/images/mobile.png'),
+              Image.asset('assets/images/mobile.png'),
               Text(
                 'Point of Sale',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -73,11 +75,16 @@ class _SignInState extends State<SignIn> {
                 width: MediaQuery.of(context).size.width,
                 child: TextFormField(
                   decoration: InputDecoration(
-                     contentPadding: EdgeInsets.all(10.0),
+                      contentPadding: EdgeInsets.all(10.0),
                       hintText: 'Client code',
                       border: new OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
-                      suffixText: '123'),
+                      suffixIcon: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('123'),
+                        ],
+                      )),
                 ),
               ),
               SizedBox(
@@ -102,11 +109,29 @@ class _SignInState extends State<SignIn> {
                 height: 44,
                 width: MediaQuery.of(context).size.width,
                 child: TextFormField(
+                  obscureText: passwordHide,
                   decoration: InputDecoration(
-
                       border: new OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
-                      suffixIcon: Icon(Icons.visibility_off_outlined)),
+                      suffixIcon: InkWell(
+                          onTap: () {
+                         
+                            setState(() {
+                           
+                              if (passwordHide == false) {
+                                    
+                                passwordHide = true;
+                              
+                              } else {
+                                print('ontap');
+                                passwordHide = false;
+                                    
+                              }
+                            });
+                          },
+                          child: Icon(passwordHide
+                              ? Icons.visibility
+                              : Icons.visibility_off_outlined))),
                 ),
               ),
               SizedBox(
@@ -115,9 +140,7 @@ class _SignInState extends State<SignIn> {
               FlatButton(
                   height: 46,
                   color: Colors.blue,
-                  onPressed: () => {
-                    Get.to(EnterCompanyDetails())
-                  },
+                  onPressed: () => {Get.to(CountryPick())},
                   child: Center(
                     child: Text(
                       'SIGN IN',
@@ -129,7 +152,7 @@ class _SignInState extends State<SignIn> {
               ),
               OutlineButton(
                 borderSide: BorderSide(color: Colors.blue),
-               // height: 46,
+                // height: 46,
                 color: Colors.white,
                 onPressed: () => {},
                 child: Center(
@@ -143,32 +166,36 @@ class _SignInState extends State<SignIn> {
               SizedBox(
                 height: 20,
               ),
-             Padding(
-               padding: const EdgeInsets.fromLTRB(10,0,10,0),
-               child: SizedBox(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: SizedBox(
                   height: 46,
                   width: MediaQuery.of(context).size.width,
                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(child: Text('Remember me',style: TextStyle(fontSize:16 ),)),
-                      Container(height: 10,width: 20,
-                      //child: Container(height: 10,width: 18,color:blue,),
-                      ) ,
-                     CustomButton()
+                      Expanded(
+                          child: Text(
+                        'Remember me',
+                        style: TextStyle(fontSize: 16),
+                      )),
+                      Container(
+                        height: 10, width: 20,
+                        //child: Container(height: 10,width: 18,color:blue,),
+                      ),
+                      CustomButton()
                     ],
                   ),
                 ),
-             ),
-           //  SizedBox(height: 50,),
+              ),
+              //  SizedBox(height: 50,),
               Expanded(
-                              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text('v.1.000.212xyz')),
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text('v.1.000.212xyz')),
               )
             ],
           )),
-          
         ),
       ),
     );
